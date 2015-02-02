@@ -15,17 +15,15 @@
 
 (defn empty-seats
   "Get a list of non-occupied seats"
-  [coach]
-  (let [{:keys [num-comp comp-size occupied]} coach]
-    (filter
-      #(not (contains? occupied %))
-      (range (* num-comp comp-size)))))
+  [{:keys [num-comp comp-size occupied]}]
+  (filter
+    #(not (contains? occupied %))
+    (range (* num-comp comp-size))))
 
 (defn empty-seats-in-comp
   "Get a list of non-occupied seats in a compartment"
-  [coach comp-nr]
-  (let [{:keys [num-comp comp-size occupied]} coach
-        seat-start (* comp-nr comp-size)]
+  [{:keys [num-comp comp-size occupied]} comp-nr]
+  (let [seat-start (* comp-nr comp-size)]
     (if (>= comp-nr num-comp) (throw (Exception. "Invalid compartment number")))
     (filter #(not (contains? occupied %))
         (range seat-start (+ seat-start comp-size)))))
